@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grace Vogue | Women's Ethnic Fashion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-gray-800 font-sans">
+
+  <!-- 🔹 Navbar -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+      <h1 class="text-2xl font-bold text-pink-600">women’s fashion</h1>
+      <ul class="hidden md:flex space-x-8 font-medium">
+        <li><a href="#home" class="hover:text-pink-600">Home</a></li>
+        <li><a href="#collection" class="hover:text-pink-600">Collections</a></li>
+        <li><a href="#festive" class="hover:text-pink-600">Festive</a></li>
+        <li><a href="#new" class="hover:text-pink-600">New Arrivals</a></li>
+        <li><a href="#about" class="hover:text-pink-600">About</a></li>
+        <li><a href="#contact" class="hover:text-pink-600">Contact</a></li>
+      </ul>
+      <button id="menuBtn" class="text-3xl md:hidden">☰</button>
+    </div>
+    <div id="mobileMenu" class="hidden bg-white border-t md:hidden">
+      <ul class="flex flex-col items-center py-4 space-y-2">
+        <li><a href="#home" class="hover:text-pink-600">Home</a></li>
+        <li><a href="#collection" class="hover:text-pink-600">Collections</a></li>
+        <li><a href="#festive" class="hover:text-pink-600">Festive</a></li>
+        <li><a href="#new" class="hover:text-pink-600">New Arrivals</a></li>
+        <li><a href="#about" class="hover:text-pink-600">About</a></li>
+        <li><a href="#contact" class="hover:text-pink-600">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 🔹 Hero Section -->
+    <section id="home" class="pt-20">
+    <div class="relative">
+      <img src="https://samyakkclothing.wordpress.com/wp-content/uploads/2023/03/main-banner-lehenga01.jpg"
+           class="w-full h-[210px] md:h-[520px]  object-cover brightness-10" alt="Banner">
+      <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white bg-black bg-opacity-10">
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔹 Trending Categories -->
+  <section id="collection" class="py-16 bg-pink-50">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-10 text-pink-700">🌸 Trending Categories 🌸</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="relative group overflow-hidden rounded-2xl shadow-lg">
+          <img src="https://fealdeal.com/cdn/shop/files/13360_36e37c4e-8b43-474f-91d6-45c3d6f81385.jpg?v=1753797334" class="w-full h-80 object-cover group-hover:scale-110 transition" />
+          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <h3 class="text-white text-xl font-semibold">Chaniya Choli</h3>
+          </div>
+        </div>
+        <div class="relative group overflow-hidden rounded-2xl shadow-lg">
+          <img src="https://www.zilikaa.com/cdn/shop/files/I-07_d01655d6-595c-4a12-a412-faa22608e398.jpg?v=1722160729" class="w-full h-80 object-cover group-hover:scale-110 transition" />
+          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <h3 class="text-white text-xl font-semibold">Sarees</h3>
+          </div>
+        </div>
+        <div class="relative group overflow-hidden rounded-2xl shadow-lg">
+          <img src="https://ragthm.com/cdn/shop/files/photo_2024-05-02_12-18-30.jpg?v=1721194877" class="w-full h-80 object-cover group-hover:scale-110 transition" />
+          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <h3 class="text-white text-xl font-semibold">Crop top</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔹 Festive Banner -->
+ <section id="festive" class="my-16 bg-pink-50 py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-pink-600">
+      ✨ Festive 2025 Chaniya Choli Collection ✨
+    </h2>
+
+    <!-- 🔸 Image Slider -->
+    <div class="relative w-full overflow-hidden rounded-2xl shadow-xl">
+      <div id="festiveSlider" class="flex transition-transform duration-[1500ms] ease-in-out">
+
+        <!-- Image 1 -->
+        <img src="https://www.samyakk.com/blog/wp-content/uploads/2023/10/Lehenga-Banner.gif"
+             class="w-full flex-shrink-0 object-cover h-[250px] sm:h-[400px] md:h-[650px]" 
+             alt="Festive Chaniya Choli">
+
+        <!-- Image 2 -->
+        <img src="https://i.pinimg.com/736x/d0/78/70/d078705c172a131d88c67bd19986172d.jpg"
+             class="w-full flex-shrink-0 object-cover h-[250px] sm:h-[400px] md:h-[650px]" 
+             alt="Designer Lehenga">
+
+        <!-- Image 3 -->
+        <img src="https://i.pinimg.com/736x/d4/24/eb/d424ebc98ccf72d940c6e653d5fb3da0.jpg"
+             class="w-full flex-shrink-0 object-cover h-[250px] sm:h-[400px] md:h-[650px]" 
+             alt="Royal Festive Outfit">
+
+      </div>
+
+      <!-- Gradient Overlay + Text -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent 
+                  flex flex-col justify-end p-6 sm:p-10 rounded-2xl">
+        <!-- <h3 class="text-white text-2xl sm:text-3xl md:text-4xl font-semibold mb-2 drop-shadow-lg">
+          Royal Ethnic Glow
+        </h3> -->
+        <!-- <p class="text-gray-100 text-sm sm:text-base md:text-lg mb-4 max-w-md">
+          Explore exclusive Chaniya Choli sets for the 2025 festive season.
+        </p> -->
+        <a href="#shop" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full 
+                             text-sm sm:text-base font-medium shadow-md w-max transition">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- 🔹 New Arrivals -->
+  <section id="new" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-10 text-pink-700">💖 New Arrivals 💖</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
+          <img src="https://amrut.co/cdn/shop/files/Royal_Blue_Golden_Embroidered_Lehenga_Choli_with_Dupatta01.jpg?v=1747473019" class="w-full h-56 md:h-[350px] object-cover">
+          <div class="p-4">
+            <h4 class="font-semibold">Royal Embroidered Lehenga</h4>
+            <p class="text-pink-600 font-bold mt-2">₹7,999</p>
+          </div>
+        </div>
+        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
+          <img src="https://static.wixstatic.com/media/faf1ba_8e61a7e398744cc7bf39deab4da8c0a3~mv2.jpg/v1/fill/w_526,h_691,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/faf1ba_8e61a7e398744cc7bf39deab4da8c0a3~mv2.jpg" class="w-full h-56 md:h-[350px]  object-cover">
+          <div class="p-4">
+            <h4 class="font-semibold">Designer Saree</h4>
+            <p class="text-pink-600 font-bold mt-2">₹4,499</p>
+          </div>
+        </div>
+        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
+          <img src="https://media.samyakk.com/pub/media/catalog/product/g/r/grey-crepe-indo-western-gown-with-cutdana-work-and-ruffled-dupatta-gw4417.jpg" class="w-full h-56 md:h-[350px]  object-cover">
+          <div class="p-4">
+            <h4 class="font-semibold">Modern Indo-Western Dress</h4>
+            <p class="text-pink-600 font-bold mt-2">₹5,299</p>
+          </div>
+        </div>
+        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
+          <img src="https://www.zibong.com/cdn/shop/files/Srivalli7.jpg?v=1729747344" class="w-full h-56 md:h-[350px]  object-cover">
+          <div class="p-4">
+            <h4 class="font-semibold">Classic Dupatta Set</h4>
+            <p class="text-pink-600 font-bold mt-2">₹2,999</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔹 About -->
+  <section id="about" class="py-16 bg-pink-50 text-center">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-6 text-pink-700">About Grace Vogue</h2>
+      <p class="text-gray-600 leading-relaxed">
+        Grace Vogue celebrates womanhood with premium Indian ethnic fashion. Our Chaniya Cholis, sarees, and festive wear are handcrafted with love, elegance, and vibrant colors that reflect true grace.
+      </p>
+    </div>
+  </section>
+
+  <!-- 🔹 Contact -->
+  <section id="contact" class="py-16 bg-gray-100 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-6 text-pink-700">Contact Us</h2>
+      <form class="grid gap-4">
+        <input type="text" placeholder="Your Name" class="p-3 border rounded">
+        <input type="email" placeholder="Your Email" class="p-3 border rounded">
+        <textarea placeholder="Your Message" class="p-3 border rounded"></textarea>
+        <button class="bg-pink-600 text-white px-6 py-3 rounded hover:bg-pink-500 transition">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 🔹 Footer -->
+  <footer class="bg-pink-600 text-white py-6 text-center">
+    <p>© 2025 Grace Vogue. All Rights Reserved | Designed by Het Web Studio 💖</p>
+  </footer>
+
+  <!-- 🔹 JavaScript -->
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+     const slider = document.getElementById('festiveSlider');
+  let index = 0;
+
+  function autoSlide() {
+    index = (index + 1) % 3; // 3 images
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  setInterval(autoSlide, 4000); // change every 4 seconds
+  </script>
+
+</body>
+</html>
