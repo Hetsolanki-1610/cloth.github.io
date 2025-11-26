@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,30 +8,63 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* --- Visual styles & animations --- */
-    body { background: radial-gradient(ellipse at 10% 10%, #041014 0%, #000000 40%); }
+    body {
+      background: radial-gradient(ellipse at 10% 10%, #041014 0%, #000000 40%);
+    }
+
     .orb {
-      width: 150px; height: 150px; border-radius: 50%;
-      display:flex;align-items:center;justify-content:center;font-weight:700;
-      box-shadow: 0 0 40px rgba(34,211,238,0.08), inset 0 0 40px rgba(255,255,255,0.02);
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      box-shadow: 0 0 40px rgba(34, 211, 238, 0.08), inset 0 0 40px rgba(255, 255, 255, 0.02);
       transition: transform .18s ease, box-shadow .18s ease;
     }
+
     .orb.glow {
       transform: scale(1.08);
-      box-shadow: 0 0 60px rgba(34,211,238,0.85), 0 0 18px rgba(34,211,238,0.35);
+      box-shadow: 0 0 60px rgba(34, 211, 238, 0.85), 0 0 18px rgba(34, 211, 238, 0.35);
       animation: pulse 1s infinite alternate;
     }
+
     @keyframes pulse {
-      from { filter: drop-shadow(0 0 10px rgba(34,211,238,0.6)); }
-      to   { filter: drop-shadow(0 0 30px rgba(34,211,238,0.95)); }
+      from {
+        filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.6));
+      }
+
+      to {
+        filter: drop-shadow(0 0 30px rgba(34, 211, 238, 0.95));
+      }
     }
-    .ring { position:absolute; inset: -26px; border-radius:50%; border:2px solid rgba(34,211,238,0.06); }
+
+    .ring {
+      position: absolute;
+      inset: -26px;
+      border-radius: 50%;
+      border: 2px solid rgba(34, 211, 238, 0.06);
+    }
 
     /* small UI niceties */
-    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); backdrop-filter: blur(6px); }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .cmd-chip { background: rgba(255,255,255,0.03); padding:6px 10px; border-radius:999px; }
+    .glass {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(6px);
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cmd-chip {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
   </style>
 </head>
+
 <body class="text-cyan-200 font-sans">
   <div class="max-w-5xl mx-auto py-12 px-6">
     <header class="flex items-center justify-between mb-6">
@@ -49,16 +83,21 @@
         <div class="w-full mt-2 text-center">
           <div id="status" class="text-sm opacity-80">Status: <span id="statusTxt">Idle</span></div>
           <div class="flex gap-2 mt-3 justify-center">
-            <button id="btnStart" class="px-4 py-2 bg-cyan-500 rounded-md text-black font-semibold hover:bg-cyan-400">Start</button>
-            <button id="btnStop" class="px-4 py-2 bg-gray-800 rounded-md border border-cyan-600 hover:bg-gray-700">Stop</button>
-            <button id="btnToggleWake" class="px-4 py-2 bg-gray-800 rounded-md border border-amber-400 hover:bg-gray-700">Wake: ON</button>
+            <button id="btnStart"
+              class="px-4 py-2 bg-cyan-500 rounded-md text-black font-semibold hover:bg-cyan-400">Start</button>
+            <button id="btnStop"
+              class="px-4 py-2 bg-gray-800 rounded-md border border-cyan-600 hover:bg-gray-700">Stop</button>
+            <button id="btnToggleWake"
+              class="px-4 py-2 bg-gray-800 rounded-md border border-amber-400 hover:bg-gray-700">Wake: ON</button>
           </div>
 
-          <div class="mt-3 text-xs opacity-70">Voice: <select id="voiceSelect" class="bg-transparent border-b border-cyan-700 ml-2 outline-none"></select></div>
-          <div class="mt-2 text-xs opacity-70">Language: <select id="langSelect" class="bg-transparent border-b border-cyan-700 ml-2 outline-none">
-            <option value="en-US">English (en-US)</option>
-            <option value="hi-IN">Hindi (hi-IN)</option>
-          </select></div>
+          <div class="mt-3 text-xs opacity-70">Voice: <select id="voiceSelect"
+              class="bg-transparent border-b border-cyan-700 ml-2 outline-none"></select></div>
+          <div class="mt-2 text-xs opacity-70">Language: <select id="langSelect"
+              class="bg-transparent border-b border-cyan-700 ml-2 outline-none">
+              <option value="en-US">English (en-US)</option>
+              <option value="hi-IN">Hindi (hi-IN)</option>
+            </select></div>
 
           <div class="mt-3 flex items-center gap-2 justify-center">
             <input id="volume" type="range" min="0" max="1" step="0.05" value="1" class="w-32" />
@@ -90,12 +129,14 @@
         <div class="mt-4">
           <label class="text-xs opacity-70">Type command (manual)</label>
           <div class="flex gap-2 mt-2">
-            <input id="manualInput" class="flex-1 bg-transparent border-b border-cyan-700 px-2 py-1 outline-none" placeholder="e.g. what is the time" />
+            <input id="manualInput" class="flex-1 bg-transparent border-b border-cyan-700 px-2 py-1 outline-none"
+              placeholder="e.g. what is the time" />
             <button id="sendManual" class="px-3 py-1 bg-cyan-500 text-black rounded-md">Send</button>
           </div>
         </div>
 
-        <div class="mt-3 text-xs opacity-70">Tip: Say "Jarvis" then your command (wake-word), or disable wake-word in settings.</div>
+        <div class="mt-3 text-xs opacity-70">Tip: Say "Jarvis" then your command (wake-word), or disable wake-word in
+          settings.</div>
       </section>
 
       <!-- Right: Logs / Settings / Help -->
@@ -114,7 +155,8 @@
       </section>
     </main>
 
-    <footer class="mt-8 text-xs opacity-60 text-center">Made with ❤️ — Frontend-only Jarvis. No backend. Customize commands in the script.</footer>
+    <footer class="mt-8 text-xs opacity-60 text-center">Made with ❤️ — Frontend-only Jarvis. No backend. Customize
+      commands in the script.</footer>
   </div>
 
   <script>
@@ -276,7 +318,7 @@
       // 3. open website / open youtube
       if (/open (youtube|google|facebook|github|stack overflow|stack overflow)/i.test(text)) {
         const site = text.match(/open (.+)$/i)[1];
-        let url = 'https://' + site.replace(/ /g,'') + '.com';
+        let url = 'https://' + site.replace(/ /g, '') + '.com';
         if (site.toLowerCase().includes('youtube')) url = 'https://www.youtube.com';
         if (site.toLowerCase().includes('google')) url = 'https://www.google.com';
         if (site.toLowerCase().includes('github')) url = 'https://github.com';
@@ -307,10 +349,29 @@
       if (/hello|hi|hey|namaste|hi jarvis/i.test(text)) { respond('Hello sir, I am Jarvis. How can I assist?'); return; }
       if (/how are you|kya haal/i.test(text)) { respond('I am operational and ready.'); return; }
 
+      if (/who is parth|kya haal/i.test(text)) {
+        respond('Parth is play boy and chutiya boy .');
+        return;
+      }
+      if (/parth mother name is |kya haal/i.test(text)) {
+        respond('Parth mother name is taraben .');
+        return;
+      }
+      if (/who is jaymin |kya haal/i.test(text)) {
+        respond('jaymin not loction by jarvise .');
+        return;
+      }
+      if (/who is mukesh |kya haal/i.test(text)) {
+        respond('mukesh is your brother.');
+        return;
+      }
+
+      
+
       // 7. change voice or volume
       if (/volume|volume to|set volume/i.test(text)) {
         const m = text.match(/(\d+(?:\.\d+)?)/);
-        if (m) { const v = Math.max(0, Math.min(1, parseFloat(m[1]) / 100)); volumeRange.value = v; respond('Volume set to ' + Math.round(v*100) + '%'); } else { respond('Please say a volume between 0 and 100'); }
+        if (m) { const v = Math.max(0, Math.min(1, parseFloat(m[1]) / 100)); volumeRange.value = v; respond('Volume set to ' + Math.round(v * 100) + '%'); } else { respond('Please say a volume between 0 and 100'); }
         return;
       }
 
@@ -334,7 +395,7 @@
 
       // visual effect
       orb.classList.add('glow');
-      setTimeout(() => {}, 10);
+      setTimeout(() => { }, 10);
       utter.onend = () => { orb.classList.remove('glow'); };
       window.speechSynthesis.cancel(); // stop any speaking queue
       window.speechSynthesis.speak(utter);
@@ -342,10 +403,10 @@
 
     // helpers
     function updateStatus(s) { statusTxt.textContent = s; }
-    function escapeHtml(str){ return str.replace(/[&<>'"]/g, (c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+    function escapeHtml(str) { return str.replace(/[&<>'"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": "&#39;" })[c]); }
 
     // Quick keyboard shortcut: press Space to toggle listening (for convenience)
-    window.addEventListener('keydown', (e)=>{
+    window.addEventListener('keydown', (e) => {
       if (e.code === 'Space') { e.preventDefault(); if (!listening) { btnStart.click(); } else { btnStop.click(); } }
     });
 
@@ -355,4 +416,5 @@
 
   </script>
 </body>
+
 </html>
