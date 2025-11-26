@@ -1,207 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grace Vogue | Women's Ethnic Fashion</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jarvis — Full Frontend Voice Assistant (HTML + Tailwind + JS)</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* --- Visual styles & animations --- */
+    body { background: radial-gradient(ellipse at 10% 10%, #041014 0%, #000000 40%); }
+    .orb {
+      width: 150px; height: 150px; border-radius: 50%;
+      display:flex;align-items:center;justify-content:center;font-weight:700;
+      box-shadow: 0 0 40px rgba(34,211,238,0.08), inset 0 0 40px rgba(255,255,255,0.02);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .orb.glow {
+      transform: scale(1.08);
+      box-shadow: 0 0 60px rgba(34,211,238,0.85), 0 0 18px rgba(34,211,238,0.35);
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      from { filter: drop-shadow(0 0 10px rgba(34,211,238,0.6)); }
+      to   { filter: drop-shadow(0 0 30px rgba(34,211,238,0.95)); }
+    }
+    .ring { position:absolute; inset: -26px; border-radius:50%; border:2px solid rgba(34,211,238,0.06); }
+
+    /* small UI niceties */
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); backdrop-filter: blur(6px); }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .cmd-chip { background: rgba(255,255,255,0.03); padding:6px 10px; border-radius:999px; }
+  </style>
 </head>
-<body class="bg-white text-gray-800 font-sans">
+<body class="text-cyan-200 font-sans">
+  <div class="max-w-5xl mx-auto py-12 px-6">
+    <header class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold">Jarvis — Full Frontend Voice Assistant</h1>
+      <div class="text-sm opacity-70">Only HTML + Tailwind + JavaScript — runs in browser</div>
+    </header>
 
-  <!-- 🔹 Navbar -->
-  <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-      <h1 class="text-2xl font-bold text-pink-600">women’s fashion</h1>
-      <ul class="hidden md:flex space-x-8 font-medium">
-        <li><a href="#home" class="hover:text-pink-600">Home</a></li>
-        <li><a href="#collection" class="hover:text-pink-600">Collections</a></li>
-        <li><a href="#festive" class="hover:text-pink-600">Festive</a></li>
-        <li><a href="#new" class="hover:text-pink-600">New Arrivals</a></li>
-        <li><a href="#about" class="hover:text-pink-600">About</a></li>
-        <li><a href="#contact" class="hover:text-pink-600">Contact</a></li>
-      </ul>
-      <button id="menuBtn" class="text-3xl md:hidden">☰</button>
-    </div>
-    <div id="mobileMenu" class="hidden bg-white border-t md:hidden">
-      <ul class="flex flex-col items-center py-4 space-y-2">
-        <li><a href="#home" class="hover:text-pink-600">Home</a></li>
-        <li><a href="#collection" class="hover:text-pink-600">Collections</a></li>
-        <li><a href="#festive" class="hover:text-pink-600">Festive</a></li>
-        <li><a href="#new" class="hover:text-pink-600">New Arrivals</a></li>
-        <li><a href="#about" class="hover:text-pink-600">About</a></li>
-        <li><a href="#contact" class="hover:text-pink-600">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+    <main class="grid md:grid-cols-3 gap-6">
+      <!-- Left: Jarvis Orb + Controls -->
+      <section class="md:col-span-1 flex flex-col items-center gap-4">
+        <div class="relative">
+          <div id="orb" class="orb bg-gradient-to-br from-cyan-400 to-sky-600 text-black text-4xl">J</div>
+          <div class="ring"></div>
+        </div>
 
-  <!-- 🔹 Hero Section -->
-    <section id="home" class="pt-20">
-    <div class="relative">
-      <img src="https://samyakkclothing.wordpress.com/wp-content/uploads/2023/03/main-banner-lehenga01.jpg"
-           class="w-full h-[210px] md:h-[520px]  object-cover brightness-10" alt="Banner">
-      <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white bg-black bg-opacity-10">
-      </div>
-    </div>
-  </section>
+        <div class="w-full mt-2 text-center">
+          <div id="status" class="text-sm opacity-80">Status: <span id="statusTxt">Idle</span></div>
+          <div class="flex gap-2 mt-3 justify-center">
+            <button id="btnStart" class="px-4 py-2 bg-cyan-500 rounded-md text-black font-semibold hover:bg-cyan-400">Start</button>
+            <button id="btnStop" class="px-4 py-2 bg-gray-800 rounded-md border border-cyan-600 hover:bg-gray-700">Stop</button>
+            <button id="btnToggleWake" class="px-4 py-2 bg-gray-800 rounded-md border border-amber-400 hover:bg-gray-700">Wake: ON</button>
+          </div>
 
-  <!-- 🔹 Trending Categories -->
-  <section id="collection" class="py-16 bg-pink-50">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-10 text-pink-700">🌸 Trending Categories 🌸</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div class="relative group overflow-hidden rounded-2xl shadow-lg">
-          <img src="https://fealdeal.com/cdn/shop/files/13360_36e37c4e-8b43-474f-91d6-45c3d6f81385.jpg?v=1753797334" class="w-full h-80 object-cover group-hover:scale-110 transition" />
-          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-            <h3 class="text-white text-xl font-semibold">Chaniya Choli</h3>
+          <div class="mt-3 text-xs opacity-70">Voice: <select id="voiceSelect" class="bg-transparent border-b border-cyan-700 ml-2 outline-none"></select></div>
+          <div class="mt-2 text-xs opacity-70">Language: <select id="langSelect" class="bg-transparent border-b border-cyan-700 ml-2 outline-none">
+            <option value="en-US">English (en-US)</option>
+            <option value="hi-IN">Hindi (hi-IN)</option>
+          </select></div>
+
+          <div class="mt-3 flex items-center gap-2 justify-center">
+            <input id="volume" type="range" min="0" max="1" step="0.05" value="1" class="w-32" />
+            <label class="text-xs opacity-70">Volume</label>
           </div>
         </div>
-        <div class="relative group overflow-hidden rounded-2xl shadow-lg">
-          <img src="https://www.zilikaa.com/cdn/shop/files/I-07_d01655d6-595c-4a12-a412-faa22608e398.jpg?v=1722160729" class="w-full h-80 object-cover group-hover:scale-110 transition" />
-          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-            <h3 class="text-white text-xl font-semibold">Sarees</h3>
+
+        <div class="mt-4 glass p-3 rounded-md w-full text-sm">
+          <div class="font-semibold mb-1">Quick commands</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="cmd-chip">Hello</span>
+            <span class="cmd-chip">What time is it</span>
+            <span class="cmd-chip">Open youtube</span>
+            <span class="cmd-chip">Search for pizza</span>
+            <span class="cmd-chip">Calculate 12 plus 34</span>
+            <span class="cmd-chip">Set a reminder</span>
           </div>
         </div>
-        <div class="relative group overflow-hidden rounded-2xl shadow-lg">
-          <img src="https://ragthm.com/cdn/shop/files/photo_2024-05-02_12-18-30.jpg?v=1721194877" class="w-full h-80 object-cover group-hover:scale-110 transition" />
-          <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-            <h3 class="text-white text-xl font-semibold">Crop top</h3>
+      </section>
+
+      <!-- Middle: Transcript + Manual input -->
+      <section class="md:col-span-1 glass p-4 rounded-md max-h-96 overflow-auto scrollbar-hide">
+        <div class="flex justify-between items-center mb-3">
+          <div class="font-semibold">Transcript</div>
+          <div class="text-xs opacity-60">Live</div>
+        </div>
+        <div id="transcript" class="space-y-2 text-sm"></div>
+
+        <div class="mt-4">
+          <label class="text-xs opacity-70">Type command (manual)</label>
+          <div class="flex gap-2 mt-2">
+            <input id="manualInput" class="flex-1 bg-transparent border-b border-cyan-700 px-2 py-1 outline-none" placeholder="e.g. what is the time" />
+            <button id="sendManual" class="px-3 py-1 bg-cyan-500 text-black rounded-md">Send</button>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- 🔹 Festive Banner -->
- <section id="festive" class="my-16 bg-pink-50 py-10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-pink-600">
-      ✨ Festive 2025 Chaniya Choli Collection ✨
-    </h2>
+        <div class="mt-3 text-xs opacity-70">Tip: Say "Jarvis" then your command (wake-word), or disable wake-word in settings.</div>
+      </section>
 
-    <!-- 🔸 Image Slider -->
-    <div class="relative w-full overflow-hidden rounded-2xl shadow-xl">
-      <div id="festiveSlider" class="flex transition-transform duration-[1500ms] ease-in-out">
+      <!-- Right: Logs / Settings / Help -->
+      <section class="md:col-span-1 glass p-4 rounded-md">
+        <div class="font-semibold mb-2">History & Actions</div>
+        <div id="history" class="text-sm max-h-48 overflow-auto scrollbar-hide"></div>
 
-        <!-- Image 1 -->
-        <img src="https://www.samyakk.com/blog/wp-content/uploads/2023/10/Lehenga-Banner.gif"
-             class="w-full flex-shrink-0 object-cover h-[250px] sm:h-[400px] md:h-[650px]" 
-             alt="Festive Chaniya Choli">
+        <div class="mt-4 font-semibold">Help</div>
+        <ul class="mt-2 text-sm list-disc list-inside opacity-80">
+          <li>Say "Jarvis" before commands if Wake is ON.</li>
+          <li>Try: "Jarvis, what's the time?" or "Open youtube"</li>
+          <li>Use manual input to test commands without mic.</li>
+        </ul>
 
-        <!-- Image 2 -->
-        <img src="https://i.pinimg.com/736x/d0/78/70/d078705c172a131d88c67bd19986172d.jpg"
-             class="w-full flex-shrink-0 object-cover h-[250px] sm:h-[400px] md:h-[650px]" 
-             alt="Designer Lehenga">
+        <div class="mt-4 text-xs opacity-70">Compatibility: modern Chrome / Edge. Mobile support varies.</div>
+      </section>
+    </main>
 
-        <!-- Image 3 -->
-        <img src="https://i.pinimg.com/736x/d4/24/eb/d424ebc98ccf72d940c6e653d5fb3da0.jpg"
-             class="w-full flex-shrink-0 object-cover h-[250px] sm:h-[400px] md:h-[650px]" 
-             alt="Royal Festive Outfit">
-
-      </div>
-
-      <!-- Gradient Overlay + Text -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent 
-                  flex flex-col justify-end p-6 sm:p-10 rounded-2xl">
-        <!-- <h3 class="text-white text-2xl sm:text-3xl md:text-4xl font-semibold mb-2 drop-shadow-lg">
-          Royal Ethnic Glow
-        </h3> -->
-        <!-- <p class="text-gray-100 text-sm sm:text-base md:text-lg mb-4 max-w-md">
-          Explore exclusive Chaniya Choli sets for the 2025 festive season.
-        </p> -->
-        <a href="#shop" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full 
-                             text-sm sm:text-base font-medium shadow-md w-max transition">
-          Shop Now
-        </a>
-      </div>
-    </div>
+    <footer class="mt-8 text-xs opacity-60 text-center">Made with ❤️ — Frontend-only Jarvis. No backend. Customize commands in the script.</footer>
   </div>
-</section>
 
-
-
-  <!-- 🔹 New Arrivals -->
-  <section id="new" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold mb-10 text-pink-700">💖 New Arrivals 💖</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
-          <img src="https://amrut.co/cdn/shop/files/Royal_Blue_Golden_Embroidered_Lehenga_Choli_with_Dupatta01.jpg?v=1747473019" class="w-full h-56 md:h-[350px] object-cover">
-          <div class="p-4">
-            <h4 class="font-semibold">Royal Embroidered Lehenga</h4>
-            <p class="text-pink-600 font-bold mt-2">₹7,999</p>
-          </div>
-        </div>
-        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
-          <img src="https://static.wixstatic.com/media/faf1ba_8e61a7e398744cc7bf39deab4da8c0a3~mv2.jpg/v1/fill/w_526,h_691,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/faf1ba_8e61a7e398744cc7bf39deab4da8c0a3~mv2.jpg" class="w-full h-56 md:h-[350px]  object-cover">
-          <div class="p-4">
-            <h4 class="font-semibold">Designer Saree</h4>
-            <p class="text-pink-600 font-bold mt-2">₹4,499</p>
-          </div>
-        </div>
-        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
-          <img src="https://media.samyakk.com/pub/media/catalog/product/g/r/grey-crepe-indo-western-gown-with-cutdana-work-and-ruffled-dupatta-gw4417.jpg" class="w-full h-56 md:h-[350px]  object-cover">
-          <div class="p-4">
-            <h4 class="font-semibold">Modern Indo-Western Dress</h4>
-            <p class="text-pink-600 font-bold mt-2">₹5,299</p>
-          </div>
-        </div>
-        <div class="border rounded-lg overflow-hidden shadow hover:shadow-xl transition">
-          <img src="https://www.zibong.com/cdn/shop/files/Srivalli7.jpg?v=1729747344" class="w-full h-56 md:h-[350px]  object-cover">
-          <div class="p-4">
-            <h4 class="font-semibold">Classic Dupatta Set</h4>
-            <p class="text-pink-600 font-bold mt-2">₹2,999</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 🔹 About -->
-  <section id="about" class="py-16 bg-pink-50 text-center">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-6 text-pink-700">About Grace Vogue</h2>
-      <p class="text-gray-600 leading-relaxed">
-        Grace Vogue celebrates womanhood with premium Indian ethnic fashion. Our Chaniya Cholis, sarees, and festive wear are handcrafted with love, elegance, and vibrant colors that reflect true grace.
-      </p>
-    </div>
-  </section>
-
-  <!-- 🔹 Contact -->
-  <section id="contact" class="py-16 bg-gray-100 text-center">
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-6 text-pink-700">Contact Us</h2>
-      <form class="grid gap-4">
-        <input type="text" placeholder="Your Name" class="p-3 border rounded">
-        <input type="email" placeholder="Your Email" class="p-3 border rounded">
-        <textarea placeholder="Your Message" class="p-3 border rounded"></textarea>
-        <button class="bg-pink-600 text-white px-6 py-3 rounded hover:bg-pink-500 transition">Send Message</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- 🔹 Footer -->
-  <footer class="bg-pink-600 text-white py-6 text-center">
-    <p>© 2025 Grace Vogue. All Rights Reserved | Designed by Het Web Studio 💖</p>
-  </footer>
-
-  <!-- 🔹 JavaScript -->
   <script>
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+    // --- Feature detection ---
+    const supportsRec = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    const supportsSynthesis = 'speechSynthesis' in window;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = supportsRec ? new SpeechRecognition() : null;
+
+    // Elements
+    const orb = document.getElementById('orb');
+    const statusTxt = document.getElementById('statusTxt');
+    const btnStart = document.getElementById('btnStart');
+    const btnStop = document.getElementById('btnStop');
+    const btnToggleWake = document.getElementById('btnToggleWake');
+    const transcriptEl = document.getElementById('transcript');
+    const historyEl = document.getElementById('history');
+    const manualInput = document.getElementById('manualInput');
+    const sendManual = document.getElementById('sendManual');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const langSelect = document.getElementById('langSelect');
+    const volumeRange = document.getElementById('volume');
+
+    // State
+    let listening = false;
+    let wakeWordOn = true;
+    let selectedVoice = null;
+
+    // Setup recognition
+    if (supportsRec) {
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        listening = true; updateStatus('Listening');
+      };
+      recognition.onend = () => {
+        listening = false; updateStatus('Idle');
+      };
+      recognition.onerror = (e) => { console.error('Recognition error', e); updateStatus('Error: ' + (e.error || 'unknown')); };
+
+      recognition.onresult = (ev) => {
+        for (let i = ev.resultIndex; i < ev.results.length; ++i) {
+          const text = ev.results[i][0].transcript.trim();
+          addTranscript('user', text);
+          handleVoice(text.toLowerCase());
+        }
+      };
+    } else {
+      updateStatus('SpeechRecognition not supported in this browser');
+    }
+
+    // Populate voices
+    function populateVoices() {
+      const voices = speechSynthesis.getVoices();
+      voiceSelect.innerHTML = '';
+      voices.forEach((v, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx; opt.textContent = v.name + ' (' + v.lang + ')';
+        voiceSelect.appendChild(opt);
+      });
+      // choose default
+      if (voices.length) { selectedVoice = voices[0]; voiceSelect.value = 0; }
+    }
+    if (supportsSynthesis) {
+      populateVoices();
+      window.speechSynthesis.onvoiceschanged = populateVoices;
+    } else {
+      voiceSelect.innerHTML = '<option>Speech Synthesis not supported</option>';
+    }
+
+    // Controls
+    btnStart.onclick = () => {
+      if (!supportsRec) { alert('SpeechRecognition not supported here. Use Chrome/Edge desktop.'); return; }
+      recognition.lang = langSelect.value;
+      recognition.start();
+      updateStatus('Starting...');
+      speak('Jarvis activated');
+    };
+    btnStop.onclick = () => {
+      if (supportsRec) recognition.stop();
+      updateStatus('Stopped');
+      speak('Jarvis paused');
+    };
+    btnToggleWake.onclick = () => {
+      wakeWordOn = !wakeWordOn;
+      btnToggleWake.textContent = 'Wake: ' + (wakeWordOn ? 'ON' : 'OFF');
+    };
+
+    voiceSelect.onchange = () => {
+      const v = speechSynthesis.getVoices()[parseInt(voiceSelect.value)];
+      if (v) selectedVoice = v;
+    };
+    langSelect.onchange = () => { if (supportsRec) recognition.lang = langSelect.value; };
+
+    sendManual.onclick = () => {
+      const t = manualInput.value.trim(); if (!t) return;
+      addTranscript('user', t);
+      handleVoice(t.toLowerCase());
+      manualInput.value = '';
+    };
+
+    // Transcript / history helper
+    function addTranscript(who, text) {
+      const p = document.createElement('div');
+      p.className = 'p-2 rounded-md ' + (who === 'user' ? 'text-right opacity-90' : 'text-left text-cyan-100');
+      p.innerHTML = (who === 'user' ? '<strong>You:</strong> ' : '<strong>Jarvis:</strong> ') + escapeHtml(text);
+      transcriptEl.prepend(p);
+      addHistory((who === 'user' ? 'You: ' : 'Jarvis: ') + text);
+    }
+    function addHistory(text) {
+      const d = document.createElement('div'); d.className = 'text-xs opacity-80 py-1 border-b border-cyan-900'; d.textContent = text;
+      historyEl.prepend(d);
+    }
+
+    // Safe small math parser (handles + - * / and parentheses, numbers)
+    function safeEvalMath(expr) {
+      // allow digits, spaces, parens and operators only
+      if (!/^[0-9+\-*/(). %]+$/.test(expr)) return null;
+      try {
+        // replace 'x' with '*'
+        const sanitized = expr.replace(/x/gi, '*');
+        // eslint-disable-next-line no-new-func
+        const result = Function('return ' + sanitized)();
+        if (typeof result === 'number' && isFinite(result)) return result;
+      } catch (e) { return null; }
+      return null;
+    }
+
+    // Core: Handle recognized text
+    function handleVoice(text) {
+      // optional: require wake word
+      const wake = wakeWordOn ? text.includes('jarvis') : true;
+      if (!wake) {
+        // show but ignore
+        addHistory('Ignored (no wake word): ' + text);
+        return;
+      }
+
+      // remove wake word
+      text = text.replace(/jarvis/gi, '').trim();
+      if (!text) { speak('Yes sir?'); return; }
+
+      // Commands
+      // 1. time
+      if (/\btime\b|\bwhat time\b|\bka time\b|\bkitne baje\b/i.test(text)) {
+        const t = new Date(); const str = t.toLocaleTimeString();
+        respond('The time is ' + str);
+        return;
+      }
+
+      // 2. date
+      if (/\bdate\b|\btoday\b|\bka din\b/i.test(text)) {
+        const d = new Date(); respond('Today is ' + d.toDateString()); return;
+      }
+
+      // 3. open website / open youtube
+      if (/open (youtube|google|facebook|github|stack overflow|stack overflow)/i.test(text)) {
+        const site = text.match(/open (.+)$/i)[1];
+        let url = 'https://' + site.replace(/ /g,'') + '.com';
+        if (site.toLowerCase().includes('youtube')) url = 'https://www.youtube.com';
+        if (site.toLowerCase().includes('google')) url = 'https://www.google.com';
+        if (site.toLowerCase().includes('github')) url = 'https://github.com';
+        respond('Opening ' + site);
+        window.open(url, '_blank');
+        return;
+      }
+
+      // 4. search for <term>
+      if (/search for (.+)/i.test(text) || /search (.+)/i.test(text)) {
+        const m = text.match(/search (?:for )?(.+)/i) || text.match(/search for (.+)/i);
+        const q = m && m[1] ? m[1] : null;
+        if (q) { respond('Searching for ' + q); window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank'); }
+        return;
+      }
+
+      // 5. calculator: calculate 2 plus 2, or 'calculate 12+34'
+      if (/calculate|what is|solve|kitna/gi.test(text)) {
+        // extract expression
+        let expr = text.replace(/calculate|what is|solve|equals|=/gi, '');
+        expr = expr.replace(/plus/gi, '+').replace(/minus/gi, '-').replace(/into|times|x/gi, '*').replace(/divided by|by/gi, '/');
+        const val = safeEvalMath(expr);
+        if (val !== null) { respond('Result: ' + val); } else { respond('Sorry, I could not compute that.'); }
+        return;
+      }
+
+      // 6. small talk
+      if (/hello|hi|hey|namaste|hi jarvis/i.test(text)) { respond('Hello sir, I am Jarvis. How can I assist?'); return; }
+      if (/how are you|kya haal/i.test(text)) { respond('I am operational and ready.'); return; }
+
+      // 7. change voice or volume
+      if (/volume|volume to|set volume/i.test(text)) {
+        const m = text.match(/(\d+(?:\.\d+)?)/);
+        if (m) { const v = Math.max(0, Math.min(1, parseFloat(m[1]) / 100)); volumeRange.value = v; respond('Volume set to ' + Math.round(v*100) + '%'); } else { respond('Please say a volume between 0 and 100'); }
+        return;
+      }
+
+      // 8. fallback: echo + suggestion
+      respond("I heard: '" + text + "'. I can open sites, tell time, calculate, or search the web.");
+    }
+
+    // Respond (speak + add transcript)
+    function respond(msg) {
+      addTranscript('jarvis', msg);
+      speak(msg);
+    }
+
+    // speak wrapper
+    function speak(text) {
+      if (!supportsSynthesis) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.volume = parseFloat(volumeRange.value || 1);
+      utter.lang = langSelect.value || 'en-US';
+      if (selectedVoice) utter.voice = selectedVoice;
+
+      // visual effect
+      orb.classList.add('glow');
+      setTimeout(() => {}, 10);
+      utter.onend = () => { orb.classList.remove('glow'); };
+      window.speechSynthesis.cancel(); // stop any speaking queue
+      window.speechSynthesis.speak(utter);
+    }
+
+    // helpers
+    function updateStatus(s) { statusTxt.textContent = s; }
+    function escapeHtml(str){ return str.replace(/[&<>'"]/g, (c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[c]); }
+
+    // Quick keyboard shortcut: press Space to toggle listening (for convenience)
+    window.addEventListener('keydown', (e)=>{
+      if (e.code === 'Space') { e.preventDefault(); if (!listening) { btnStart.click(); } else { btnStop.click(); } }
     });
 
-     const slider = document.getElementById('festiveSlider');
-  let index = 0;
+    // Initial status
+    if (!supportsRec) updateStatus('No SpeechRecognition');
+    if (!supportsSynthesis) updateStatus('SpeechSynthesis not supported');
 
-  function autoSlide() {
-    index = (index + 1) % 3; // 3 images
-    slider.style.transform = `translateX(-${index * 100}%)`;
-  }
-
-  setInterval(autoSlide, 4000); // change every 4 seconds
   </script>
-
 </body>
 </html>
